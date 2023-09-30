@@ -1,20 +1,39 @@
-module.exports = mongoose => {
-    const Tutorial = mongoose.model(
-        "tutorial",
-        mongoose.Schema(
-            {
-                title: String,
-                description: String,
-                published: Boolean
-            },
-            { timestamps: true }
-        )
-    );
+// module.exports = mongoose => {
+//     const Tutorial = mongoose.model(
+//         "tutorial",
+//         mongoose.Schema(
+//             {
+//                 title: String,
+//                 description: String,
+//                 published: Boolean
+//             },
+//             { timestamps: true }
+//         )
+        
+//     );
 
+//     return Tutorial;
+// };
+
+module.exports = (mongoose, mongoosePaginate) => {
+    var schema = mongoose.Schema(...);
+  
+    schema.method("toJSON", function() (
+        {
+            title: String,
+            description: String,
+            published: Boolean
+        },
+        { timestamps: true }
+    )
+  
+    schema.plugin(mongoosePaginate);
+  
+    const Tutorial = mongoose.model("tutorial", schema);
     return Tutorial;
-};
+  };
 
-//If yiu use front-end that needs id field instead of _id, :::override toJSON
+//If you use front-end that needs id field instead of _id, :::override toJSON
 // module.exports = mongoose => {
 //     var schema = mongoose.Schema(
 //       {
