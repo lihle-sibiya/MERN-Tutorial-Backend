@@ -16,17 +16,15 @@
 // };
 
 module.exports = (mongoose, mongoosePaginate) => {
-    var schema = mongoose.Schema(...);
-  
-    schema.method("toJSON", function() (
-        {
-            title: String,
-            description: String,
-            published: Boolean
-        },
-        { timestamps: true }
+    var schema = mongoose.Schema({
+                        title: String,
+                        description: String,
+                        published: Boolean
+                    },
+                    { timestamps: true }
     )
   
+        // Add pagination plugin
     schema.plugin(mongoosePaginate);
   
     const Tutorial = mongoose.model("tutorial", schema);

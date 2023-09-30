@@ -21,6 +21,6 @@ mongoose.Promise = global.Promise;
 const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
-db.tutorials = require("./tutorial.model.js")(mongoose, mongoosePaginate);
+db.tutorials = require("./tutorialModel.js")(mongoose, mongoosePaginate);
 
 module.exports = db;
