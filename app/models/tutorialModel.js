@@ -1,53 +1,23 @@
-// module.exports = mongoose => {
-//     const Tutorial = mongoose.model(
-//         "tutorial",
-//         mongoose.Schema(
-//             {
-//                 title: String,
-//                 description: String,
-//                 published: Boolean
-//             },
-//             { timestamps: true }
-//         )
-        
-//     );
+const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-//     return Tutorial;
-// };
+var schema = mongoose.Schema({
+    title: String,
+    description: String,
+    published: Boolean
+}, { timestamps: true });
 
-module.exports = (mongoose, mongoosePaginate) => {
-    var schema = mongoose.Schema({
-                        title: String,
-                        description: String,
-                        published: Boolean
-                    },
-                    { timestamps: true }
-    )
-  
-        // Add pagination plugin
-    schema.plugin(mongoosePaginate);
-  
-    const Tutorial = mongoose.model("tutorial", schema);
-    return Tutorial;
-  };
+// Add pagination plugin
+schema.plugin(mongoosePaginate);
+
 
 //If you use front-end that needs id field instead of _id, :::override toJSON
-// module.exports = mongoose => {
-//     var schema = mongoose.Schema(
-//       {
-//         title: String,
-//         description: String,
-//         published: Boolean
-//       },
-//       { timestamps: true }
-//     );
-  
-//     schema.method("toJSON", function() {
-//       const { __v, _id, ...object } = this.toObject();
-//       object.id = _id;
-//       return object;
-//     });
-  
-//     const Tutorial = mongoose.model("tutorial", schema);
-//     return Tutorial;
-//   };
+schema.method("toJSON", function () {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+});
+
+const Tutorial = mongoose.model("tutorial", schema);
+
+module.exports = Tutorial;
