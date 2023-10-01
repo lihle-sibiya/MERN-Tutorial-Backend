@@ -24,5 +24,8 @@
     "mongodb": "^4.5.0",
     "mongoose": "^6.11.1",
     "mongoose-paginate-v2": "^1.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
