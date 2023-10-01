@@ -1,5 +1,16 @@
 const db = require("../models");
-const Tutorial = db.tutorials;
+const Tutorial = db.Tutorial;
+
+const mongoosePaginate = require('mongoose-paginate-v2');
+
+// Check if the model is valid
+if (!Tutorial) {
+    console.error("Error: Tutorial model is not defined.");
+    process.exit(1);
+}
+
+// Apply the plugin to the schema of the Tutorial model
+Tutorial.schema.plugin(mongoosePaginate);
 
 const getPagination = (page, size) => {
     const limit = size ? +size : 3;
@@ -7,6 +18,7 @@ const getPagination = (page, size) => {
 
     return { limit, offset };
 };
+
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
@@ -173,12 +185,3 @@ exports.deleteAll = (req, res) => {
             });
         });
 };
-
-//Return pagination response:
-
-// {
-//     "totalItems": 8,
-//         "tutorials": [...],
-//             "totalPages": 3,
-//                 "currentPage": 1
-// }

@@ -1,11 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-require("./app/routes/tutorialRoutes");
+const db = require("./app/models");
+
+// Import tutorialRoutes.js
+const tutorialRoutes = require("./app/routes/tutorialRoutes");
 
 const app = express();
 
-const db = require("./app/models");
+
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -35,6 +38,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
+
+// Use the routes defined in tutorialRoutes.js
+tutorialRoutes(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

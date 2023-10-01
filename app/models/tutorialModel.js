@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-var schema = mongoose.Schema({
+const schema = mongoose.Schema({
     title: String,
     description: String,
     published: Boolean
@@ -10,8 +10,7 @@ var schema = mongoose.Schema({
 // Add pagination plugin
 schema.plugin(mongoosePaginate);
 
-
-//If you use front-end that needs id field instead of _id, :::override toJSON
+// If you use front-end that needs id field instead of _id, override toJSON
 schema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
