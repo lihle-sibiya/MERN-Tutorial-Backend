@@ -4,7 +4,7 @@ const cors = require("cors");
 const db = require("./app/models");
 
 // Import tutorialRoutes.js
-const tutorialRoutes = require("./app/routes/tutorialRoutes");
+const tutorialRoutes = require("./app/routes/tutorial.routes.js");
 
 const app = express();
 
