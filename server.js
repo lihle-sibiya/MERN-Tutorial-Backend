@@ -20,7 +20,7 @@ db.mongoose
   });
 
 var corsOptions = {
-  origin: "http://127.0.0.1:8081"
+  origin: "http://127.0.0.1:8080"
 };
 
 app.use(cors(corsOptions));

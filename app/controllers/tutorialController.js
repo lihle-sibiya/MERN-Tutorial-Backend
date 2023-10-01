@@ -85,25 +85,6 @@ exports.findAllPublished = (req, res) => {
         });
 };
 
-//Retrieve all Tutorials/ find by title from the database:
-
-exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-
-    Tutorial.find(condition)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving tutorials."
-            });
-        });
-};
-
-
 //Find a single Tutorial with an id:
 
 exports.findOne = (req, res) => {
