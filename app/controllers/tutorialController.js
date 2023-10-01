@@ -85,13 +85,46 @@ exports.findAllPublished = (req, res) => {
         });
 };
 
-// Find a single Tutorial with an id
-exports.findOne = (req, res) => {
+//Retrieve all Tutorials/ find by title from the database:
 
+exports.findAll = (req, res) => {
+    const title = req.query.title;
+    var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
+
+    Tutorial.find(condition)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving tutorials."
+            });
+        });
 };
 
 
-//Update a Tutorial identified by the id in the request:
+//Find a single Tutorial with an id:
+
+exports.findOne = (req, res) => {
+    const id = req.params.id;
+
+    Tutorial.findById(id)
+        .then(data => {
+            if (!data)
+                res.status(404).send({ message: "Not found Tutorial with id " + id });
+            else res.send(data);
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .send({ message: "Error retrieving Tutorial with id=" + id });
+        });
+};
+
+
+
+//Update a Tutorial by the id in the request:
 
 exports.update = (req, res) => {
     if (!req.body) {
@@ -156,62 +189,6 @@ exports.deleteAll = (req, res) => {
             res.status(500).send({
                 message:
                     err.message || "Some error occurred while removing all tutorials."
-            });
-        });
-};
-
-
-//Retrieve all Tutorials/ find by title from the database:
-
-exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-
-    Tutorial.find(condition)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving tutorials."
-            });
-        });
-};
-
-//Find a single Tutorial with an id:
-
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-
-    Tutorial.findById(id)
-        .then(data => {
-            if (!data)
-                res.status(404).send({ message: "Not found Tutorial with id " + id });
-            else res.send(data);
-        })
-        .catch(err => {
-            res
-                .status(500)
-                .send({ message: "Error retrieving Tutorial with id=" + id });
-        });
-};
-
-
-
-
-
-//Find all Tutorials with published = true:
-
-exports.findAllPublished = (req, res) => {
-    Tutorial.find({ published: true })
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving tutorials."
             });
         });
 };
