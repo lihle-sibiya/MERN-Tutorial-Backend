@@ -34,7 +34,11 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-require("./app/routes/tutorial.routes")(app);
+//require("./app/routes/tutorial.routes")(app);
+// Import the routes for tutorials
+const Tutorial = require("./app/models/tutorial.model.js");
+const tutorialRoutes = require("./app/routes/tutorial.routes");
+tutorialRoutes(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
